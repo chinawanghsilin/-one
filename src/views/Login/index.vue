@@ -8,7 +8,7 @@
         <img src="../../assets/logo_index.png" alt />
       </div>
       <!-- 中间的表单 -->
-      <el-form v-model="formDate" :rules="rules">
+      <el-form :model="formDate" :rules="rules" ref="loginForm">
         <el-form-item prop="modile">
           <el-input placeholder="请输入用户名" v-model="formDate.modile"></el-input>
         </el-form-item>
@@ -20,7 +20,7 @@
           <el-checkbox label="我已阅读并同意用户协议和隐私条款" name="type" v-model="formDate.checkbox"></el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" style="width : 100% ; ">登录</el-button>
+          <el-button type="primary" style="width : 100% ; " @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -30,6 +30,13 @@
 <script>
 export default {
   data () {
+    var func = function (rule, value, callback) {
+      if (value) {
+        callback()
+      } else {
+        callback(new Error('请仔细阅读协议'))
+      }
+    }
     return {
       formDate: {
         modile: '',
@@ -37,8 +44,32 @@ export default {
         checkbox: false
       },
       rules: {
-
+        modile:
+        [
+          {
+            required: true, message: '请输入手机号', tigger: 'blur'
+          }, {
+            pattern: /^1[3456789]\d{9}$/, message: '手机号格式错误', trigger: 'blur'
+          }
+        ],
+        code: [{
+          required: true, message: '请输入验证码', tigger: 'blur'
+        }, {
+          pattern: /^\d{6}$/, message: '验证码必须为6位数字'
+        }],
+        checkbox: [{
+          validator: func
+        }]
       }
+    }
+  },
+  methods: {
+    login () {
+      this.$refs.loginForm.validate(isOk => {
+        if (isOk) {
+          console.log('前端校验成功')
+        }
+      })
     }
   }
 }
