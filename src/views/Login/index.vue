@@ -5,28 +5,43 @@
     <el-card class="card">
       <!-- 头部logo -->
       <div class="title">
-        <img src="../../assets/logo_index.png" alt="">
+        <img src="../../assets/logo_index.png" alt />
       </div>
       <!-- 中间的表单 -->
-      <el-form>
-        <el-form-item >
-          <el-input placeholder="请输入用户名"></el-input>
+      <el-form v-model="formDate" :rules="rules">
+        <el-form-item prop="modile">
+          <el-input placeholder="请输入用户名" v-model="formDate.modile"></el-input>
         </el-form-item>
-        <el-form-item >
-          <el-input placeholder="请输入验证码" style="width : 65%;" ></el-input>
+        <el-form-item prop="code">
+          <el-input placeholder="请输入验证码" v-model="formDate.code" style="width : 65%;"></el-input>
           <el-button style="float : right">发送验证码</el-button>
         </el-form-item>
+        <el-form-item prop="checkbox">
+          <el-checkbox label="我已阅读并同意用户协议和隐私条款" name="type" v-model="formDate.checkbox"></el-checkbox>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" style="width : 100% ; ">登录</el-button>
+        </el-form-item>
       </el-form>
-      <el-checkbox label="我已阅读并同意用户协议和隐私条款" name="type"></el-checkbox>
-      <el-row>
-        <el-button type = "primary" style="width : 100% ; margin-top : 30px">登录</el-button>
-      </el-row>
     </el-card>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      formDate: {
+        modile: '',
+        code: '',
+        checkbox: false
+      },
+      rules: {
+
+      }
+    }
+  }
+}
 </script>
 
 <style lang = "less" scoped>
@@ -44,15 +59,15 @@ export default {}
     width: 440px;
     height: 360px;
     /* text-align: center; */
-     /* 卡片上的logo */
-     .title {
-       text-align: center;
-       margin-bottom: 30px;
-        img {
-          width: 200px;
-          height: 45px;
-        }
-     }
+    /* 卡片上的logo */
+    .title {
+      text-align: center;
+      margin-bottom: 30px;
+      img {
+        width: 200px;
+        height: 45px;
+      }
+    }
   }
 }
 </style>
