@@ -9,8 +9,8 @@
       </div>
       <!-- 中间的表单 -->
       <el-form :model="formDate" :rules="rules" ref="loginForm">
-        <el-form-item prop="modile">
-          <el-input placeholder="请输入用户名" v-model="formDate.modile"></el-input>
+        <el-form-item prop="mobile">
+          <el-input placeholder="请输入用户名" v-model="formDate.mobile"></el-input>
         </el-form-item>
         <el-form-item prop="code">
           <el-input placeholder="请输入验证码" v-model="formDate.code" style="width : 65%;"></el-input>
@@ -39,27 +39,39 @@ export default {
     }
     return {
       formDate: {
-        modile: '',
+        mobile: '',
         code: '',
         checkbox: false
       },
       rules: {
-        modile:
-        [
+        mobile: [
           {
-            required: true, message: '请输入手机号', tigger: 'blur'
-          }, {
-            pattern: /^1[3456789]\d{9}$/, message: '手机号格式错误', trigger: 'blur'
+            required: true,
+            message: '请输入手机号',
+            tigger: 'blur'
+          },
+          {
+            pattern: /^1[3456789]\d{9}$/,
+            message: '手机号格式错误',
+            trigger: 'blur'
           }
         ],
-        code: [{
-          required: true, message: '请输入验证码', tigger: 'blur'
-        }, {
-          pattern: /^\d{6}$/, message: '验证码必须为6位数字'
-        }],
-        checkbox: [{
-          validator: func
-        }]
+        code: [
+          {
+            required: true,
+            message: '请输入验证码',
+            tigger: 'blur'
+          },
+          {
+            pattern: /^\d{6}$/,
+            message: '验证码必须为6位数字'
+          }
+        ],
+        checkbox: [
+          {
+            validator: func
+          }
+        ]
       }
     }
   },
@@ -67,7 +79,19 @@ export default {
     login () {
       this.$refs.loginForm.validate(isOk => {
         if (isOk) {
-          console.log('前端校验成功')
+          // console.log('前端校验成功')
+          this.$axios({
+            method: 'post',
+            url: '/authorizations',
+            data: this.formDate
+          }).then(result => {
+            console.log(result)
+            window.localStorage.setItem(
+              'user-info',
+              JSON.stringify(result.data.data)
+            )
+            this.$router.push('/home')
+          })
         }
       })
     }
