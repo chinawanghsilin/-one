@@ -28,6 +28,7 @@
 </template>
 
 <script>
+// import { type } from 'os'
 export default {
   data () {
     var func = function (rule, value, callback) {
@@ -91,6 +92,12 @@ export default {
               JSON.stringify(result.data.data)
             )
             this.$router.push('/home')
+          }).catch(() => {
+            // alert('您的账户或者密码错误')
+            this.$message({
+              message: '当前账户或者密码有误',
+              type: 'warning'
+            })
           })
         }
       })
