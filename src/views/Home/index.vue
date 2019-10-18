@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import layoutAside from '../../components/Home/layout-aside'
-import layoutHeader from '../../components/Home/layout-header'
-export default {
-  components: {
-    'layout-aside': layoutAside,
-    'layout-header': layoutHeader
-  }
-}
+// import layoutAside from '../../components/Home/layout-aside'
+// import layoutHeader from '../../components/Home/layout-header'
+// export default {
+//   components: {
+//     'layout-aside': layoutAside,
+//     'layout-header': layoutHeader
+//   }
+// }
 </script>
 
 <style lang = "less">
